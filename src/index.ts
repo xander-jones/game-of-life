@@ -8,12 +8,12 @@
    1. All other live cells die in the next generation. Similarly, all other dead cells stay dead.
 
 *** */
-import { version as appVersion } from '../package.json'
+import packageInfo from '../package.json'
 import Bugsnag from '@bugsnag/js'
 
 Bugsnag.start({ 
     apiKey: '97ef27a04c69ae72307ba2a3b7168b5b',
-    appVersion: appVersion
+    appVersion: packageInfo.version
 })
 
 function pageBootstrap(): void {
