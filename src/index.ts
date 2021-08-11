@@ -16,7 +16,7 @@ Bugsnag.start({
     appVersion: appVersion
 })
 
-function pageBootstrap() {
+function pageBootstrap(): void {
     let header = document.createElement("h1");
     header.appendChild(document.createTextNode("Game of Life"));
 
@@ -51,7 +51,7 @@ class GameOfLife {
         this.pushGridToDOM();
     }
 
-    nextGeneration() {
+    nextGeneration(): void {
         var newGrid: boolean[][] = this.grid.slice();
         this.grid.forEach((xel, x) => {
             xel.forEach((yel, y) => {
@@ -65,7 +65,7 @@ class GameOfLife {
     // 1. Any live cell with two or three live neighbours survives.
     // 1. Any dead cell with three live neighbours becomes a live cell.
     // 1. All other live cells die in the next generation. Similarly, all other dead cells stay dead.
-    calcLiveOrDie(cell: boolean, neighbours: boolean[]) {
+    calcLiveOrDie(cell: boolean, neighbours: boolean[]): boolean {
         let liveNeighbours: number = 0;
         neighbours.forEach((neighbour: boolean) => {
             liveNeighbours += (neighbour) ? 1 : 0;
@@ -88,7 +88,7 @@ class GameOfLife {
         }
     }
 
-    getNeighbourStates(x: number, y: number) {
+    getNeighbourStates(x: number, y: number): boolean[] {
         let neighbours: boolean[] = [];
         let directions: number[][] = [
             [0,-1], // N
@@ -115,7 +115,7 @@ class GameOfLife {
         return neighbours;
     }
 
-    pushGridToDOM() {
+    pushGridToDOM(): void {
         let newTable = document.createElement("table");
         newTable.id = "tableGol";
         newTable.style.border = "1px solid red";
