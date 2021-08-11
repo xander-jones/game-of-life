@@ -16,6 +16,8 @@ Bugsnag.start({
     appVersion: packageInfo.version
 })
 
+var autoRunTimeout: ReturnType<typeof setTimeout>;
+
 function pageBootstrap(): void {
     let header = document.createElement("h1");
     header.appendChild(document.createTextNode("Game of Life"));
@@ -26,8 +28,20 @@ function pageBootstrap(): void {
         gol.nextGeneration();
     }
 
+    let automaticRunCheck = document.createElement("input");
+    automaticRunCheck.setAttribute("type", "checkbox");
+    automaticRunCheck.textContent = "Run automatically";
+    automaticRunCheck.onchange = function() {
+        if (automaticRunCheck.checked) {
+            gol.nextGeneration(true);
+        } else {
+            clearTimeout(autoRunTimeout);
+        }
+    }
+
     document.body.appendChild(header);
     document.body.appendChild(nextGenerationBtn);
+    document.body.appendChild(automaticRunCheck);
 }
 
 class GameOfLife {
@@ -51,7 +65,7 @@ class GameOfLife {
         this.pushGridToDOM();
     }
 
-    nextGeneration(): void {
+    nextGeneration(autoRun: boolean = false): void {
         var newGrid: boolean[][] = this.grid.slice();
         this.grid.forEach((xel, x) => {
             xel.forEach((yel, y) => {
@@ -60,6 +74,9 @@ class GameOfLife {
         });
         this.grid = newGrid;
         this.pushGridToDOM();
+        if (autoRun) {
+            autoRunTimeout = setTimeout(function() { gol.nextGeneration(true) }, 10)
+        }
     }
 
     calcLiveOrDie(cell: boolean, neighbours: boolean[]): boolean {
