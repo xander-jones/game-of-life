@@ -19,7 +19,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Game of Life',
+      template: "./src/index.html"
     }),
   ],
   output: {
