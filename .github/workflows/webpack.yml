@@ -27,19 +27,3 @@ jobs:
       run: |
         npm install
         npm run build
-
-on:
-  push:
-    branches: [ master ]
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [16.x]
-
-    - name: Push dist to gh-pages
-      run: |
-        git subtree push --prefix dist origin gh-pages
