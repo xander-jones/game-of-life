@@ -19,29 +19,24 @@ Bugsnag.start({
 var autoRunTimeout: ReturnType<typeof setTimeout>;
 
 function pageBootstrap(): void {
-    let header = document.createElement("h1");
-    header.appendChild(document.createTextNode("Game of Life"));
-
-    let nextGenerationBtn = document.createElement("button");
-    nextGenerationBtn.textContent = "Next Generation";
+    let nextGenerationBtn = document.getElementById("nextGenerationBtn") as HTMLInputElement;
     nextGenerationBtn.onclick = function() {
         gol.nextGeneration();
     }
+    document.getElementById("resetBtn").onclick = function() {
+        gol = new GameOfLife(50, 40);
+    }
 
-    let automaticRunCheck = document.createElement("input");
-    automaticRunCheck.setAttribute("type", "checkbox");
-    automaticRunCheck.textContent = "Run automatically";
-    automaticRunCheck.onchange = function() {
-        if (automaticRunCheck.checked) {
+    let autoNextGeneration = document.getElementById("autoNextGeneration") as HTMLInputElement;
+    autoNextGeneration.onchange = function() {
+        if (autoNextGeneration.checked) {
+            nextGenerationBtn.disabled = true;
             gol.nextGeneration(true);
         } else {
+            nextGenerationBtn.disabled = false;
             clearTimeout(autoRunTimeout);
         }
     }
-
-    document.body.appendChild(header);
-    document.body.appendChild(nextGenerationBtn);
-    document.body.appendChild(automaticRunCheck);
 }
 
 class GameOfLife {
@@ -132,22 +127,27 @@ class GameOfLife {
     pushGridToDOM(): void {
         let newTable = document.createElement("table");
         newTable.id = "tableGol";
-        newTable.style.border = "1px solid red";
-        newTable.style.fontFamily = "courier"
+        this.cellsAlive = 0;
 
         for (var y = 0; y < this.sizey; y++) {
             let row = newTable.insertRow();
             for (var x = 0; x < this.sizex; x++) {
                 let cell = row.insertCell();
-                cell.appendChild(document.createTextNode(((this.grid[x][y] === true) ? "■" : "​ ​​​​")))
+                if (this.grid[x][y] === true) {
+                    cell.appendChild(document.createTextNode("■"));
+                    this.cellsAlive += 1;   
+                } else {
+                    cell.appendChild(document.createTextNode(" "));
+                }
             }
         }
-        let table = document.getElementById("tableGol")
+        let table = document.getElementById("tableGol");
         if (table == null) {
-            document.body.appendChild(newTable);
+            document.getElementById("gol").appendChild(newTable);
         } else {
             table.replaceWith(newTable);
         }
+        document.getElementById("cellsAliveCount").innerText = String(this.cellsAlive);
     }
 }
 
