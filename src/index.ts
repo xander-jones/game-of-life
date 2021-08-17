@@ -9,7 +9,9 @@
 
 *** */
 import packageInfo from '../package.json'
+import patterns from './patterns'
 import Bugsnag from '@bugsnag/js'
+
 
 Bugsnag.start({ 
     apiKey: '97ef27a04c69ae72307ba2a3b7168b5b',
@@ -22,22 +24,23 @@ const mapSizeDefault = {
     columns: 50
 }
 
-const glider: number[][] = [
-    [2,2],
-    [2,3],
-    [2,4]
-]
-
-
 function pageBootstrap(): void {
     document.getElementById("version").innerText = `v${packageInfo.version}`;
+
+    let patternSelector = document.getElementById("patternSelector") as HTMLInputElement;
+    Object.keys(patterns).forEach(key => {
+        let option = document.createElement("option");
+        option.value = key;
+        option.innerText = key;
+        patternSelector.appendChild(option);
+    });
 
     let nextGenerationBtn = document.getElementById("nextGenerationBtn") as HTMLInputElement;
     nextGenerationBtn.onclick = function() {
         gol.nextGeneration();
     }
     document.getElementById("resetBtn").onclick = function() {
-        gol = new GameOfLife(mapSizeDefault.rows, mapSizeDefault.columns);
+        gol = new GameOfLife(mapSizeDefault.rows, mapSizeDefault.columns, patterns[patternSelector.value]);
     }
 
     let autoNextGeneration = document.getElementById("autoNextGeneration") as HTMLInputElement;
@@ -184,9 +187,9 @@ class GameOfLife {
             table.replaceWith(newTable);
         }
         document.getElementById("cellsAliveCount").innerText = String(this.cellsAlive);
-        document.getElementById("generation").innerText = String(this.generation);
+        document.getElementById("generationCount").innerText = String(this.generation);
     }
 }
 
 pageBootstrap();
-let gol = new GameOfLife(mapSizeDefault.rows, mapSizeDefault.columns, glider);
+let gol = new GameOfLife(mapSizeDefault.rows, mapSizeDefault.columns);
