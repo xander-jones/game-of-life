@@ -107,7 +107,7 @@ class GameOfLife {
         this.generation += 1;
         this.pushGridToDOM();
         if (autoRun) {
-            autoRunTimeout = setTimeout(function() { gol.nextGeneration(true) }, 10)
+            autoRunTimeout = setTimeout(function() { gol.nextGeneration(true) }, 100)
         }
     }
 
