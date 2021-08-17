@@ -19,6 +19,8 @@ Bugsnag.start({
 var autoRunTimeout: ReturnType<typeof setTimeout>;
 
 function pageBootstrap(): void {
+    document.getElementById("version").innerText = `v${packageInfo.version}`;
+
     let nextGenerationBtn = document.getElementById("nextGenerationBtn") as HTMLInputElement;
     nextGenerationBtn.onclick = function() {
         gol.nextGeneration();
