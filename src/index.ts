@@ -176,7 +176,7 @@ class GameOfLife {
                     cell.appendChild(document.createTextNode("■"));
                     this.cellsAlive += 1;
                 } else {
-                    cell.appendChild(document.createTextNode("_"));
+                    cell.appendChild(document.createTextNode(" "));
                 }
             }
         }
