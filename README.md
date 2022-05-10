@@ -1,8 +1,8 @@
 # game-of-life
 
-![example workflow](https://github.com/xander-jones/game-of-life/actions/workflows/.github/workflows/webpack.yml/badge.svg)
+![example workflow](https://github.com/xljones/game-of-life/actions/workflows/.github/workflows/webpack.yml/badge.svg)
 
-John Conway's Game of Life written in TypeScript. [See the live example here](https://xander-jones.github.io/game-of-life/)
+John Conway's Game of Life written in TypeScript. [See the live example here](https://xljones.github.io/game-of-life/)
 ## Development
 
 To run a development server deploying the project:
